@@ -1,46 +1,39 @@
 --- 
 # TinyTapeout project information
 project:
-  wokwi_id:    0       # If using wokwi, set this to your project's ID
-  source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
+  wokwi_id: 0
+  source_files:  # source files must be in ./src
     - navray_top.vhd
     - sqrt.vhd
-  top_module:  "navray_top"      # put the name of your top module here, make it unique by prepending your github username
-
-# As everyone will have access to all designs, try to make it easy for someone new to your design to know what
-# it does and how to operate it.
-#
-# Here is an example: https://github.com/mattvenn/tinytapeout_m_segments/blob/main/info.yaml
-#
+  top_module:  "navray_top"
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "Wallace Everest"                      # Your name
-  discord:      "morningjava#9314"                     # Your discord handle - make sure to include the # part as well
-  title:        "Square Root"                          # Project title
-  description:  "Non-restoring square-root algorithm"  # Short description of what your project does
-  how_it_works: "7-bit input, 4-bit output, unsigned"  # Longer description of how the project works
-  how_to_test:  ""      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
-  external_hw:  ""      # Describe any external hardware needed
+  author:       "Wallace Everest"
+  discord:      "morningjava#9314"
+  title:        "Square Root"
+  description:  "Non-restoring square-root algorithm"
+  how_it_works: "7-bit input, 4-bit output, unsigned"
+  how_to_test:  "Apply 1Hz sine wave to unsigned input"
+  external_hw:  "Connect unsigned output to logic analyzer"
   language:     "VHDL"  # other examples include Verilog, Amaranth, VHDL, etc
-  doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
-  clock_hz:     1kHz    # Clock frequency in Hz (if required) we are expecting max clock frequency to be ~6khz. Provided on input 0.
-  picture:      ""      # relative path to a picture in your repository
-  inputs:               # a description of what the inputs do
-    - in(0)
-    - in(1)
-    - in(2)
-    - in(3)
-    - in(4)
-    - in(5)
-    - in(6)
-    - clock
+  doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"
+  clock_hz:     1000
+  picture:      "./pics/update_cycle.png"  # relative path to a picture in your repository
+  inputs:
+    - io_in(0) => clk
+    - io_in(1) => data(0)
+    - io_in(2) => data(1)
+    - io_in(3) => data(2)
+    - io_in(4) => data(3)
+    - io_in(5) => data(4)
+    - io_in(6) => data(5)
+    - io_in(7) => data(6)
   outputs:
-    - segment a         # a description of what the outputs do
-    - segment b
-    - segment c
-    - segment d
-    - segment e
-    - segment f
-    - segment g
-    - none
-
+    - io_out(0) => segment a 
+    - io_out(1) => segment b
+    - io_out(2) => segment c
+    - io_out(3) => segment d
+    - io_out(4) => segment e
+    - io_out(5) => segment f
+    - io_out(6) => segment g
+    - io_out(7) => none
