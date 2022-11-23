@@ -3,9 +3,9 @@
 project:
   wokwi_id:    0       # If using wokwi, set this to your project's ID
   source_files:        # If using an HDL, set wokwi_id as 0 and uncomment and list your source files here. Source files must be in ./src
-    - sqrt_top.vhd
-    - sqrt_bfm.vhd
-  top_module:  "sqrt_top"      # put the name of your top module here, make it unique by prepending your github username
+    - navray_top.vhd
+    - sqrt.vhd
+  top_module:  "navray_top"      # put the name of your top module here, make it unique by prepending your github username
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
 # it does and how to operate it.
@@ -18,7 +18,7 @@ documentation:
   discord:      "morningjava#9314"                     # Your discord handle - make sure to include the # part as well
   title:        "Square Root"                          # Project title
   description:  "Non-restoring square-root algorithm"  # Short description of what your project does
-  how_it_works: ""      # Longer description of how the project works
+  how_it_works: "7-bit input, 4-bit output, unsigned"  # Longer description of how the project works
   how_to_test:  ""      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
   external_hw:  ""      # Describe any external hardware needed
   language:     "VHDL"  # other examples include Verilog, Amaranth, VHDL, etc
@@ -26,14 +26,14 @@ documentation:
   clock_hz:     1kHz    # Clock frequency in Hz (if required) we are expecting max clock frequency to be ~6khz. Provided on input 0.
   picture:      ""      # relative path to a picture in your repository
   inputs:               # a description of what the inputs do
-    - clock
-    - reset
     - in(0)
     - in(1)
     - in(2)
     - in(3)
     - in(4)
     - in(5)
+    - in(6)
+    - clock
   outputs:
     - segment a         # a description of what the outputs do
     - segment b
