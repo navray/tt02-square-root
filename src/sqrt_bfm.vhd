@@ -1,2 +1,0 @@
--- Bus functional model
--- $URL: $
