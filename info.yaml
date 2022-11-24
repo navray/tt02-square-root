@@ -18,7 +18,7 @@ documentation:
   language:     "SystemVerilog"
   doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"
   clock_hz:     1000
-  picture:      "./pics/update_cycle.png"  # relative path to a picture in your repository
+  picture:      "./pics/local_interconnect.png"  # relative path to a picture in your repository
   inputs:
     - io_in(0) => clk
     - io_in(1) => data(0)
