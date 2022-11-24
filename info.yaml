@@ -3,8 +3,8 @@
 project:
   wokwi_id: 0
   source_files:  # source files must be in ./src
-    - navray_top.vhd
-    - sqrt.vhd
+    - navray_top.sv
+    - sqrt.sv
   top_module:  "navray_top"
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
