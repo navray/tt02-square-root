@@ -1,11 +1,13 @@
 -- Square root algorithm
 -- by Wallace Everest
 -- 23-NOV-2022
--- https://github.com/navray/tt02-square-root.git
+-- https://github.com/navray/tt02-square-root
 --
--- Based on work from Yamin Li and Wanming Chu
--- "A New Non-Restoring Square Root Algorithm"
--- International Conference on Computer Design, 1996
+-- Based on work by:
+-- Yamin Li and Wanming Chu, 
+-- "A new non-restoring square root algorithm and its VLSI implementations,"
+-- Proceedings of the 1996 International Conference on Computer Design,
+-- VLSI in Computers and Processors, October 1996 Pages 538–544
 
 -- PACKAGE WRAPPER ------------------------------------------------------------
 library ieee;

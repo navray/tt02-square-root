@@ -13,7 +13,7 @@ documentation:
   title:        "Square Root"
   description:  "Non-restoring square-root algorithm"
   how_it_works: "7-bit input, 4-bit output, unsigned"
-  how_to_test:  "Apply 1Hz sine wave to unsigned input"
+  how_to_test:  "Apply 1 Hz sine wave to unsigned input"
   external_hw:  "Connect unsigned output to logic analyzer"
   language:     "VHDL"  # other examples include Verilog, Amaranth, VHDL, etc
   doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"

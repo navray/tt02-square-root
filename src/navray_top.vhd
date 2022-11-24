@@ -1,7 +1,7 @@
 -- Top-level wrapper
 -- by Wallace Everest
 -- 23-NOV-2022
--- https://github.com/navray/tt02-square-root.git
+-- https://github.com/navray/tt02-square-root
 
 -- FUNCTIONAL MODEL -------------------------------------------------------
 library ieee;
@@ -19,7 +19,7 @@ entity navray_top is
 end entity;
 
 architecture rtl of navray_top is 
-  constant K_WIDTH : natural := 7;
+  constant K_WIDTH : natural := 8;  -- should be power-of-two
   signal data_out : unsigned(3 downto 0);
   
 begin
@@ -27,14 +27,15 @@ begin
   begin
     io_out(3 downto 0) <= std_logic_vector(data_out);
     io_out(7 downto 4) <= (others => '0');
-  end;
+  end block;
   
   SQRT_INST : sqrt
   generic map ( G_WIDTH => K_WIDTH )
   port map (
-    clk      => io_in(7),
-    data_in  => unsigned(io_in(6 downto 0)),
-    data_out => data_out
+    clk                 => io_in(0),
+    data_in(6 downto 0) => unsigned(io_in(7 downto 1)),
+    data_in(7)          => '0',
+    data_out            => data_out
   );
 
 end architecture;
