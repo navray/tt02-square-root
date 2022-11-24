@@ -12,35 +12,35 @@
 `default_nettype none
 
 module sqrt (
-  input  wire        clk,
-  input  wire  [6:0] data_in,
-  output logic [3:0] data_out
+  input  wire       clk,
+  input  wire [6:0] data_in,
+  output reg  [3:0] data_out
 );
 
   typedef logic [6:0] i_type;
   typedef logic [3:0] o_type;
   typedef logic [5:0] r_type;
-  i_type [0:4] d;
-  o_type [0:4] q;
-  r_type [0:4] r;
-  r_type [0:4] x;
-  r_type [0:4] y;
-  logic  [0:4] sign;
-  logic signed [5:0] alu [0:4];
+  i_type d    [0:4];
+  o_type q    [0:4];
+  r_type r    [0:4];
+  r_type x    [0:3];
+  r_type y    [0:3];
+  r_type alu  [0:3];
+  logic  sign [0:3];
   
   assign d[0] = data_in;
-  assign q[0] = 4'b0;
-  assign r[0] = 6'b0;
+  assign q[0] = '0;
+  assign r[0] = '0;
   assign data_out = q[4];
-
-  for (genvar i = 0; i < 3; i++) begin : sqrt_gen
-    assign sign[i] = r[i][5];  // sign of R is operand
+    
+  for (genvar i = 0; i < 4; i++) begin : sqrt_gen
+    assign sign[i] = r[i][5];               // sign of R is operand
     assign x[i]    = {r[i][3:0], d[i][6:5]};
     assign y[i]    = {q[i], sign[i], 1'b1};
     assign alu[i]  = (sign[i] == 1'b0) ? (signed'(x[i]) - signed'(y[i])) : (signed'(x[i]) + signed'(y[i]));
 
     always_ff @(posedge clk) begin : sqrt_reg
-        d[i+1] <= {d[i][4:0], 2'b0};     // shift left 2-bit
+        d[i+1] <= {d[i][4:0], 2'b0};        // shift left 2-bit
         q[i+1] <= {q[i][2:0], ~alu[i][5]};  // shift left 1-bit
         r[i+1] <= alu[i];
     end : sqrt_reg
