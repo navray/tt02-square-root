@@ -15,7 +15,7 @@ documentation:
   how_it_works: "7-bit input, 4-bit output, unsigned"
   how_to_test:  "Apply 1 Hz sine wave to unsigned input"
   external_hw:  "Connect unsigned output to logic analyzer"
-  language:     "VHDL"  # other examples include Verilog, Amaranth, VHDL, etc
+  language:     "SystemVerilog"
   doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"
   clock_hz:     1000
   picture:      "./pics/update_cycle.png"  # relative path to a picture in your repository
