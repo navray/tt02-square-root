@@ -1,47 +1,58 @@
-// Square root algorithm
-// by Wallace Everest
-// 23-NOV-2022
+// Title: Square-root algorithm in SystemVerlog
+// Author: Wallace Everest
+// Date: 23-NOV-2022
 // https://github.com/navray/tt02-square-root
 //
-// Based on work by:
-// Yamin Li and Wanming Chu, 
-// "A new non-restoring square root algorithm and its VLSI implementations,"
-// Proceedings of the 1996 International Conference on Computer Design,
-// VLSI in Computers and Processors, October 1996 Pages 538–544
+// Decription:
+//   Based on work by Yamin Li and Wanming Chu, 
+//   "A new non-restoring square root algorithm and its VLSI implementations,"
+//   Proceedings of the 1996 International Conference on Computer Design,
+//   VLSI in Computers and Processors, October 1996 Pages 538–544
+//
+// Implementation:
+//   Code is parameterized to accept variable input width.
+//   Output width is always half the input width.
 
 `default_nettype none
 
-module sqrt (
-  input  wire       clk,
-  input  wire [6:0] data_in,
-  output reg  [3:0] data_out
+module sqrt
+#(parameter G_WIDTH = 8)  // size must be even
+(
+  input  wire                 clk,
+  input  wire [G_WIDTH-1:0]   data_in,
+  output wire [G_WIDTH/2-1:0] data_out
 );
 
-  typedef logic [6:0] i_type;
-  typedef logic [3:0] o_type;
-  typedef logic [5:0] r_type;
-  i_type d    [0:4];
-  o_type q    [0:4];
-  r_type r    [0:4];
-  r_type x    [0:3];
-  r_type y    [0:3];
-  r_type alu  [0:3];
-  logic  sign [0:3];
-  
-  assign d[0] = data_in;
-  assign q[0] = '0;
-  assign r[0] = '0;
-  assign data_out = q[4];
-    
-  for (genvar i = 0; i < 4; i++) begin : sqrt_gen
-    assign sign[i] = r[i][5];               // sign of R is operand
-    assign x[i]    = {r[i][3:0], d[i][6:5]};
-    assign y[i]    = {q[i], sign[i], 1'b1};
-    assign alu[i]  = (sign[i] == 1'b0) ? (signed'(x[i]) - signed'(y[i])) : (signed'(x[i]) + signed'(y[i]));
+  typedef logic unsigned [G_WIDTH-1:0]   d_type;
+  typedef logic unsigned [G_WIDTH/2-1:0] q_type;
+  typedef logic signed   [G_WIDTH/2+1:0] r_type;
+  d_type d    [0:G_WIDTH/2];
+  q_type q    [0:G_WIDTH/2];
+  r_type r    [0:G_WIDTH/2];
+  r_type x    [0:G_WIDTH/2-1];
+  r_type y    [0:G_WIDTH/2-1];
+  r_type alu  [0:G_WIDTH/2-1];
+  logic  sign [0:G_WIDTH/2-1];
 
+  assign data_out = q[G_WIDTH/2];
+  
+  always_comb begin : sqrt_io
+    d[0] = data_in;
+    q[0] = '0;
+    r[0] = '0;
+  end : sqrt_io;
+    
+  for (genvar i = 0; i <= (G_WIDTH/2-1); i++) begin : sqrt_gen
+    always_comb begin : sqrt_comb
+      sign[i] = r[i][G_WIDTH/2+1];  // sign of R is operand
+      x[i]    = {r[i][G_WIDTH/2-1:0], d[i][G_WIDTH-1:G_WIDTH-2]};
+      y[i]    = {q[i], sign[i], 1'b1};
+      alu[i]  = (sign[i] == 1'b0) ? (x[i] - y[i]) : (x[i] + y[i]);
+    end : sqrt_comb;
+    
     always_ff @(posedge clk) begin : sqrt_reg
-        d[i+1] <= {d[i][4:0], 2'b0};        // shift left 2-bit
-        q[i+1] <= {q[i][2:0], ~alu[i][5]};  // shift left 1-bit
+        d[i+1] <= {d[i][G_WIDTH-3:0], 2'b0};  // left shift 2-bit
+        q[i+1] <= {q[i][G_WIDTH/2-2:0], ~alu[i][G_WIDTH/2+1]};  // left shift 1-bit
         r[i+1] <= alu[i];
     end : sqrt_reg
   end : sqrt_gen

@@ -5,35 +5,36 @@ project:
   source_files:  # source files must be in ./src
     - navray_top.sv
     - sqrt.sv
+    - seg7.sv
   top_module:  "navray_top"
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
   author:       "Wallace Everest"
   discord:      "morningjava#9314"
-  title:        "Square Root"
-  description:  "Non-restoring square-root algorithm"
+  title:        "Non-restoring Square-root"
+  description:  "Square-root for use in RMS calculations"
   how_it_works: "7-bit input, 4-bit output, unsigned"
-  how_to_test:  "Apply 1 Hz sine wave to unsigned input"
-  external_hw:  "Connect unsigned output to logic analyzer"
+  how_to_test:  "Apply unsigned input {0x0..0x7F} to logic pins"
+  external_hw:  "Result on 7-segment display {0x0..0xB}"
   language:     "SystemVerilog"
   doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"
-  clock_hz:     1000
+  clock_hz:     1 kHz
   picture:      "./pics/local_interconnect.png"  # relative path to a picture in your repository
   inputs:
-    - io_in(0) => clk
-    - io_in(1) => data(0)
-    - io_in(2) => data(1)
-    - io_in(3) => data(2)
-    - io_in(4) => data(3)
-    - io_in(5) => data(4)
-    - io_in(6) => data(5)
-    - io_in(7) => data(6)
+    - clk
+    - data(0)
+    - data(1)
+    - data(2)
+    - data(3)
+    - data(4)
+    - data(5)
+    - data(6)
   outputs:
-    - io_out(0) => segment a 
-    - io_out(1) => segment b
-    - io_out(2) => segment c
-    - io_out(3) => segment d
-    - io_out(4) => segment e
-    - io_out(5) => segment f
-    - io_out(6) => segment g
-    - io_out(7) => none
+    - segment a 
+    - segment b
+    - segment c
+    - segment d
+    - segment e
+    - segment f
+    - segment g
+    - segment dp
