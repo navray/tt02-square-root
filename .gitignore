@@ -4,3 +4,6 @@
 *.vcd
 sim/
 syn/
+gds/
+log/
+pdf/

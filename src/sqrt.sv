@@ -1,7 +1,8 @@
-// Title: Square-root algorithm in SystemVerlog
+// Title:  Square root algorithm in SystemVerilog
+// File:   sqrt.sv
 // Author: Wallace Everest
-// Date: 23-NOV-2022
-// https://github.com/navray/tt02-square-root
+// Date:   23-NOV-2022
+// URL:    https://github.com/navray/tt02-square-root
 //
 // Decription:
 //   Based on work by Yamin Li and Wanming Chu, 
@@ -11,7 +12,8 @@
 //
 // Implementation:
 //   Code is parameterized to accept variable input width.
-//   Output width is always half the input width.
+//   Output width is half the input width.
+//   Pipeline delay is output width + 1.
 
 `default_nettype none
 
@@ -26,13 +28,9 @@ module sqrt
   typedef logic unsigned [G_WIDTH-1:0]   d_type;
   typedef logic unsigned [G_WIDTH/2-1:0] q_type;
   typedef logic signed   [G_WIDTH/2+1:0] r_type;
-  d_type d    [0:G_WIDTH/2];
-  q_type q    [0:G_WIDTH/2];
-  r_type r    [0:G_WIDTH/2];
-  r_type x    [0:G_WIDTH/2-1];
-  r_type y    [0:G_WIDTH/2-1];
-  r_type alu  [0:G_WIDTH/2-1];
-  logic  sign [0:G_WIDTH/2-1];
+  d_type d [G_WIDTH/2+1];
+  q_type q [G_WIDTH/2+1];
+  r_type r [G_WIDTH/2+1];
 
   assign data_out = q[G_WIDTH/2];
   
@@ -41,19 +39,18 @@ module sqrt
     q[0] = '0;
     r[0] = '0;
   end : sqrt_io;
-    
-  for (genvar i = 0; i <= (G_WIDTH/2-1); i++) begin : sqrt_gen
-    always_comb begin : sqrt_comb
-      sign[i] = r[i][G_WIDTH/2+1];  // sign of R is operand
-      x[i]    = {r[i][G_WIDTH/2-1:0], d[i][G_WIDTH-1:G_WIDTH-2]};
-      y[i]    = {q[i], sign[i], 1'b1};
-      alu[i]  = (sign[i] == 1'b0) ? (x[i] - y[i]) : (x[i] + y[i]);
-    end : sqrt_comb;
-    
+
+  for (genvar i = 0; i < (G_WIDTH/2); i++) begin : sqrt_gen
     always_ff @(posedge clk) begin : sqrt_reg
-        d[i+1] <= {d[i][G_WIDTH-3:0], 2'b0};  // left shift 2-bit
-        q[i+1] <= {q[i][G_WIDTH/2-2:0], ~alu[i][G_WIDTH/2+1]};  // left shift 1-bit
-        r[i+1] <= alu[i];
+      logic sign;
+      r_type x, y, alu;
+      sign    = r[i][G_WIDTH/2+1];  // sign of R is operand
+      x       = {r[i][G_WIDTH/2-1:0], d[i][G_WIDTH-1:G_WIDTH-2]};
+      y       = {q[i], sign, 1'b1};
+      alu     = (sign == 1'b0) ? (x - y) : (x + y);
+      d[i+1] <= {d[i][G_WIDTH-3:0], 2'b0};  // left shift 2-bit
+      q[i+1] <= {q[i][G_WIDTH/2-2:0], ~alu[G_WIDTH/2+1]};  // left shift 1-bit
+      r[i+1] <= alu;
     end : sqrt_reg
   end : sqrt_gen
 endmodule

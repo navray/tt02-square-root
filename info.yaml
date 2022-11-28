@@ -11,14 +11,14 @@ project:
 documentation: 
   author:       "Wallace Everest"
   discord:      "morningjava#9314"
-  title:        "Non-restoring Square-root"
-  description:  "Square-root for use in RMS calculations"
+  title:        "Non-restoring Square Root"
+  description:  "Square root for use in RMS calculations"
   how_it_works: "7-bit input, 4-bit output, unsigned"
   how_to_test:  "Apply unsigned input {0x0..0x7F} to logic pins"
   external_hw:  "Result on 7-segment display {0x0..0xB}"
   language:     "SystemVerilog"
   doc_link:     "https://github.com/navray/tt02-square-root/blob/main/README.md"
-  clock_hz:     1 kHz
+  clock_hz:     1000
   picture:      "./pics/local_interconnect.png"  # relative path to a picture in your repository
   inputs:
     - clk

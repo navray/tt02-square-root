@@ -1,7 +1,8 @@
-// Title: 7-segment decoder for the TinyTapeout-02 PCB
+// Title:  7-segment decoder for the TinyTapeout-02 PCB
+// File:   seg7.sv
 // Author: Wallace Everest
-// Date: 25-NOV-2022
-// https://github.com/navray/tt02-square-root
+// Date:   25-NOV-2022
+// URL:    https://github.com/navray/tt02-square-root
 //
 // Description:
 //   Converts a 4-bit binary code to 7-segment hexadecimal

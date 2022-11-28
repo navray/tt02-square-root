@@ -1,7 +1,8 @@
-// Square root testbench
-// by Wallace Everest
-// 23-NOV-2022
-// https://github.com/navray/tt02-square-root
+// Title:  Square root testbench
+// File:   tb_sqrt.sv
+// Author: Wallace Everest
+// Date:   23-NOV-2022
+// URL:    https://github.com/navray/tt02-square-root
 
 `default_nettype none
 
