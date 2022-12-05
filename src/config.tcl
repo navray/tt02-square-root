@@ -48,10 +48,7 @@ set ::env(DECAP_CELL) "\
 
 # clock
 set ::env(CLOCK_TREE_SYNTH) 1
-<<<<<<< HEAD
-=======
 # period is in ns, so 20000ns == 50kHz
->>>>>>> upstream/main
 set ::env(CLOCK_PERIOD) "20000"
 set ::env(CLOCK_PORT) {io_in[0]}
 
